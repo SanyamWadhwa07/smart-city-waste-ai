@@ -28,16 +28,16 @@ export default function DashboardPage() {
 
   return (
     <MainLayout>
-      <div className="space-y-6">
+      <div className="space-y-8">
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
-            <h1 className="text-2xl font-bold">Live Dashboard</h1>
-            <p className="text-muted-foreground">Real-time waste detection and routing</p>
+            <h1 className="text-3xl font-bold bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text">Live Dashboard</h1>
+            <p className="text-muted-foreground text-base mt-1">Real-time waste detection and routing</p>
           </div>
-          <div className="flex items-center gap-2 text-sm">
-            <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-            <span className="text-muted-foreground">System Online</span>
+          <div className="flex items-center gap-2.5 px-4 py-2 rounded-full bg-primary/10 border border-primary/30">
+            <div className="w-2.5 h-2.5 rounded-full bg-primary animate-pulse shadow-lg shadow-primary/50" />
+            <span className="text-sm font-medium text-primary">System Online</span>
           </div>
         </div>
 

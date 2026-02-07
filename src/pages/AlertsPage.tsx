@@ -100,26 +100,26 @@ export default function AlertsPage() {
 
   return (
     <MainLayout>
-      <div className="space-y-6">
+      <div className="space-y-8">
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
-            <h1 className="text-2xl font-bold">Alert History</h1>
-            <p className="text-muted-foreground">Monitor and manage contamination alerts</p>
+            <h1 className="text-3xl font-bold bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text">Alert History</h1>
+            <p className="text-muted-foreground text-base mt-1">Monitor and manage contamination alerts</p>
           </div>
-          <div className="flex items-center gap-2">
-            <Badge variant="outline" className="bg-destructive/20 text-destructive border-destructive/50">
+          <div className="flex items-center gap-3">
+            <Badge variant="outline" className="bg-destructive/20 text-destructive border-destructive/50 px-3 py-1.5">
               {alerts.filter((a) => a.type === "critical" && !a.resolved).length} Critical
             </Badge>
-            <Badge variant="outline" className="bg-accent/20 text-accent border-accent/50">
+            <Badge variant="outline" className="bg-accent/20 text-accent border-accent/50 px-3 py-1.5">
               {alerts.filter((a) => a.type === "warning" && !a.resolved).length} Warnings
             </Badge>
           </div>
         </div>
 
         {/* Filters */}
-        <Card className="glass-card">
-          <CardContent className="p-4">
+        <Card className="pro-card">
+          <CardContent className="p-5">
             <div className="flex flex-col sm:flex-row gap-4">
               <div className="relative flex-1">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -127,11 +127,11 @@ export default function AlertsPage() {
                   placeholder="Search alerts..."
                   value={filter}
                   onChange={(e) => setFilter(e.target.value)}
-                  className="pl-9 bg-muted/30"
+                  className="pl-9 bg-muted/30 border-0 shadow-sm"
                 />
               </div>
               <Select value={typeFilter} onValueChange={setTypeFilter}>
-                <SelectTrigger className="w-[150px] bg-muted/30">
+                <SelectTrigger className="w-[160px] bg-muted/30 border-0 shadow-sm">
                   <Filter className="h-4 w-4 mr-2" />
                   <SelectValue placeholder="Filter type" />
                 </SelectTrigger>
@@ -148,9 +148,9 @@ export default function AlertsPage() {
 
         <div className="grid lg:grid-cols-3 gap-6">
           {/* Alerts Table */}
-          <Card className="glass-card lg:col-span-2">
+          <Card className="pro-card lg:col-span-2">
             <CardHeader className="pb-0">
-              <CardTitle>Alerts</CardTitle>
+              <CardTitle className="text-xl">Alerts</CardTitle>
             </CardHeader>
             <CardContent>
               <Table>
@@ -245,9 +245,9 @@ export default function AlertsPage() {
           </Card>
 
           {/* Alert Details */}
-          <Card className="glass-card">
+          <Card className="pro-card">
             <CardHeader>
-              <CardTitle>Alert Details</CardTitle>
+              <CardTitle className="text-xl">Alert Details</CardTitle>
             </CardHeader>
             <CardContent>
               {selectedAlert ? (

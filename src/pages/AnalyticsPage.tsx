@@ -63,17 +63,17 @@ export default function AnalyticsPage() {
 
   return (
     <MainLayout>
-      <div className="space-y-6">
+      <div className="space-y-8">
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
-            <h1 className="text-2xl font-bold">Analytics</h1>
-            <p className="text-muted-foreground">Performance insights and trends</p>
+            <h1 className="text-3xl font-bold bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text">Analytics</h1>
+            <p className="text-muted-foreground text-base mt-1">Performance insights and trends</p>
           </div>
           <div className="flex items-center gap-3">
             <Select value={dateRange} onValueChange={setDateRange}>
-              <SelectTrigger className="w-[140px] bg-card">
-                <Calendar className="h-4 w-4 mr-2" />
+              <SelectTrigger className="w-[160px] bg-card shadow-sm hover:shadow-md transition-shadow">
+                <Calendar className="h-4 w-4 mr-2 text-primary" />
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -83,7 +83,7 @@ export default function AnalyticsPage() {
                 <SelectItem value="90d">Last 90 days</SelectItem>
               </SelectContent>
             </Select>
-            <Button variant="outline" onClick={handleExport}>
+            <Button variant="outline" onClick={handleExport} className="shadow-sm hover:shadow-md transition-all">
               <Download className="h-4 w-4 mr-2" />
               Export
             </Button>
@@ -93,15 +93,15 @@ export default function AnalyticsPage() {
         {/* Charts Grid */}
         <div className="grid lg:grid-cols-2 gap-6">
           {/* Contamination Trends */}
-          <Card className="glass-card">
+          <Card className="pro-card">
             <CardHeader>
               <div className="flex items-center justify-between">
                 <div>
-                  <CardTitle className="flex items-center gap-2">
+                  <CardTitle className="flex items-center gap-2 text-xl">
                     <TrendingUp className="h-5 w-5 text-accent" />
                     Contamination Trends
                   </CardTitle>
-                  <CardDescription>Daily contamination rate vs baseline</CardDescription>
+                  <CardDescription className="mt-1">Daily contamination rate vs baseline</CardDescription>
                 </div>
                 <Badge variant="outline" className="bg-accent/20 text-accent border-accent/50">
                   {dateRange === "7d" ? "7 Days" : dateRange}
@@ -145,10 +145,10 @@ export default function AnalyticsPage() {
           </Card>
 
           {/* Waste Distribution */}
-          <Card className="glass-card">
+          <Card className="pro-card">
             <CardHeader>
-              <CardTitle>Waste Stream Distribution</CardTitle>
-              <CardDescription>Breakdown by destination type</CardDescription>
+              <CardTitle className="text-xl">Waste Stream Distribution</CardTitle>
+              <CardDescription className="mt-1">Breakdown by destination type</CardDescription>
             </CardHeader>
             <CardContent>
               <ResponsiveContainer width="100%" height={300}>
@@ -181,10 +181,10 @@ export default function AnalyticsPage() {
           </Card>
 
           {/* Items by Category */}
-          <Card className="glass-card">
+          <Card className="pro-card">
             <CardHeader>
-              <CardTitle>Items by Category</CardTitle>
-              <CardDescription>Total items processed by material type</CardDescription>
+              <CardTitle className="text-xl">Items by Category</CardTitle>
+              <CardDescription className="mt-1">Total items processed by material type</CardDescription>
             </CardHeader>
             <CardContent>
               <ResponsiveContainer width="100%" height={300}>
@@ -206,10 +206,10 @@ export default function AnalyticsPage() {
           </Card>
 
           {/* Accuracy Over Time */}
-          <Card className="glass-card">
+          <Card className="pro-card">
             <CardHeader>
-              <CardTitle>System Accuracy</CardTitle>
-              <CardDescription>Accuracy percentage throughout the day</CardDescription>
+              <CardTitle className="text-xl">System Accuracy</CardTitle>
+              <CardDescription className="mt-1">Accuracy percentage throughout the day</CardDescription>
             </CardHeader>
             <CardContent>
               <ResponsiveContainer width="100%" height={300}>
