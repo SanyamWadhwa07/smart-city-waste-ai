@@ -4,7 +4,12 @@ import { DetectionFeed } from "@/components/dashboard/DetectionFeed";
 import { DecisionStream } from "@/components/dashboard/DecisionStream";
 import { PredictiveAlert } from "@/components/dashboard/PredictiveAlert";
 import { AgentFlow } from "@/components/dashboard/AgentFlow";
-import { useMetricsSimulation } from "@/hooks/useSimulation";
+import {
+  useDetectionSimulation,
+  useDecisionStream,
+  useMetricsSimulation,
+} from "@/hooks/useSimulation";
+import { useBackendLive } from "@/hooks/useBackendLive";
 import { useToast } from "@/hooks/use-toast";
 import {
   Package,
@@ -16,8 +21,17 @@ import {
 } from "lucide-react";
 
 export default function DashboardPage() {
-  const metrics = useMetricsSimulation();
+  const backend = useBackendLive();
+  const simDetections = useDetectionSimulation();
+  const simDecisions = useDecisionStream();
+  const simMetrics = useMetricsSimulation();
   const { toast } = useToast();
+
+  const isLive = backend.status === "connected";
+  const detections = isLive ? backend.detections : simDetections;
+  const decisions = isLive ? backend.decisions : simDecisions;
+  const metrics = backend.metrics ?? simMetrics;
+  const status = isLive ? "connected" : backend.status === "error" ? "error" : "mock";
 
   const handleAlertAction = () => {
     toast({
@@ -94,8 +108,8 @@ export default function DashboardPage() {
 
         {/* Detection Feed and Decision Stream */}
         <div className="grid lg:grid-cols-2 gap-6">
-          <DetectionFeed />
-          <DecisionStream />
+          <DetectionFeed detections={detections} status={status} />
+          <DecisionStream decisions={decisions} status={status} />
         </div>
 
         {/* Agent Flow */}

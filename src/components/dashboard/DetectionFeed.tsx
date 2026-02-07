@@ -1,11 +1,22 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { useDetectionSimulation } from "@/hooks/useSimulation";
-import { binColors } from "@/lib/mockData";
-import { Video, Wifi } from "lucide-react";
+import { binColors, Detection } from "@/lib/mockData";
+import { Video, Wifi, Signal } from "lucide-react";
 
-export function DetectionFeed() {
-  const detections = useDetectionSimulation();
+type Props = {
+  detections: Detection[];
+  status: "connected" | "connecting" | "error" | "mock";
+};
+
+export function DetectionFeed({ detections, status }: Props) {
+  const statusLabel =
+    status === "connected"
+      ? "Backend"
+      : status === "connecting"
+        ? "Connecting..."
+        : status === "error"
+          ? "Offline (simulated)"
+          : "Simulated";
 
   return (
     <Card className="glass-card h-full">
@@ -19,6 +30,10 @@ export function DetectionFeed() {
             <Badge variant="outline" className="bg-primary/20 text-primary border-primary/50">
               <Wifi className="h-3 w-3 mr-1 animate-pulse" />
               30 FPS
+            </Badge>
+            <Badge variant="secondary" className="gap-1">
+              <Signal className="h-3 w-3" />
+              {statusLabel}
             </Badge>
           </div>
         </div>

@@ -2,14 +2,17 @@ import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { useDecisionStream } from "@/hooks/useSimulation";
-import { binColors, BinType } from "@/lib/mockData";
+import { binColors, DecisionEntry } from "@/lib/mockData";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { GitBranch, Search, ArrowRight } from "lucide-react";
+import { GitBranch, Search, ArrowRight, Signal } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-export function DecisionStream() {
-  const decisions = useDecisionStream();
+type Props = {
+  decisions: DecisionEntry[];
+  status: "connected" | "connecting" | "error" | "mock";
+};
+
+export function DecisionStream({ decisions, status }: Props) {
   const [filter, setFilter] = useState("");
 
   const filteredDecisions = decisions.filter(
@@ -35,9 +38,21 @@ export function DecisionStream() {
             <GitBranch className="h-5 w-5 text-secondary" />
             Decision Stream
           </CardTitle>
-          <Badge variant="outline" className="bg-secondary/20 text-secondary border-secondary/50">
-            Live
-          </Badge>
+          <div className="flex items-center gap-2">
+            <Badge variant="outline" className="bg-secondary/20 text-secondary border-secondary/50">
+              Live
+            </Badge>
+            <Badge variant="secondary" className="gap-1">
+              <Signal className="h-3 w-3" />
+              {status === "connected"
+                ? "Backend"
+                : status === "connecting"
+                  ? "Connecting..."
+                  : status === "error"
+                    ? "Offline"
+                    : "Simulated"}
+            </Badge>
+          </div>
         </div>
         <div className="relative mt-2">
           <Search className="absolute left-2 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
