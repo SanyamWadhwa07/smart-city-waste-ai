@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MainLayout } from "@/components/layout/MainLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -20,6 +20,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { generateAlerts, Alert } from "@/lib/mockData";
+import { useAlertsLive } from "@/hooks/useAlerts";
 import {
   AlertTriangle,
   AlertCircle,
@@ -56,10 +57,15 @@ const alertStyles = {
 };
 
 export default function AlertsPage() {
-  const [alerts, setAlerts] = useState<Alert[]>(generateAlerts());
+  const { alerts: liveAlerts, status } = useAlertsLive();
+  const [alerts, setLocalAlerts] = useState<Alert[]>(generateAlerts());
   const [filter, setFilter] = useState("");
   const [typeFilter, setTypeFilter] = useState<string>("all");
   const [selectedAlert, setSelectedAlert] = useState<Alert | null>(null);
+
+  useEffect(() => {
+    setLocalAlerts(liveAlerts);
+  }, [liveAlerts]);
 
   const filteredAlerts = alerts.filter((alert) => {
     const matchesSearch =
@@ -70,7 +76,7 @@ export default function AlertsPage() {
   });
 
   const handleResolve = (id: string) => {
-    setAlerts((prev) =>
+    setLocalAlerts((prev) =>
       prev.map((alert) =>
         alert.id === id ? { ...alert, resolved: true } : alert
       )
@@ -78,7 +84,7 @@ export default function AlertsPage() {
   };
 
   const handleDismiss = (id: string) => {
-    setAlerts((prev) => prev.filter((alert) => alert.id !== id));
+    setLocalAlerts((prev) => prev.filter((alert) => alert.id !== id));
     if (selectedAlert?.id === id) {
       setSelectedAlert(null);
     }
@@ -113,6 +119,9 @@ export default function AlertsPage() {
             </Badge>
             <Badge variant="outline" className="bg-accent/20 text-accent border-accent/50 px-3 py-1.5">
               {alerts.filter((a) => a.type === "warning" && !a.resolved).length} Warnings
+            </Badge>
+            <Badge variant="outline" className="bg-muted/40 text-foreground border-border/60 px-3 py-1.5">
+              {status === "live" ? "Live" : status === "loading" ? "Connecting..." : "Simulated"}
             </Badge>
           </div>
         </div>

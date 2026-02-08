@@ -53,5 +53,9 @@ def generate_event() -> Event:
             contamination_flag=decision.contamination_flag,
             agent_disagreement=decision.agent_disagreement,
             reason=decision.reason,
+            contamination_score=decision.contamination_score,
+            confidence_score=decision.confidence_score,
+            material_agent_decision=decision.material_agent_decision,
+            routing_agent_decision=decision.routing_agent_decision,
         ),
     )

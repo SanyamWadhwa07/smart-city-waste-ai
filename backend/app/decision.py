@@ -1,22 +1,9 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from typing import Optional
 
-
-ROUTES = {
-    "plastic": "Recyclable",
-    "glass": "Recyclable",
-    "metal": "Recyclable",
-    "paper": "Recyclable",
-    "cardboard": "Recyclable",
-    "organic": "Organic",
-    "food": "Organic",
-    "battery": "Hazardous",
-    "chemical": "Hazardous",
-    "trash": "Landfill",
-}
-
-HAZARDOUS = {"battery", "chemical"}
+from .dual_agent.dual_agent import DualAgentEngine, DualAgentDecision
 
 
 @dataclass
@@ -25,30 +12,41 @@ class DecisionResult:
     contamination_flag: bool
     agent_disagreement: bool
     reason: str | None = None
+    contamination_score: float | None = None
+    confidence_score: float | None = None
+    material_agent_decision: str | None = None
+    routing_agent_decision: str | None = None
+
+
+_ENGINE: Optional[DualAgentEngine] = None
+
+
+def _engine() -> DualAgentEngine:
+    global _ENGINE
+    if _ENGINE is None:
+        _ENGINE = DualAgentEngine(confidence_threshold=0.75)
+    return _ENGINE
 
 
 def decide(label: str, confidence: float, agent_b_label: str | None = None) -> DecisionResult:
-    route = ROUTES.get(label, "Landfill")
-    contamination_flag = False
-    agent_disagreement = False
-    reason = None
+    """Cross-validates material + routing agents and resolves conflicts."""
+    decision: DualAgentDecision = _engine().run(label, confidence)
 
-    if label in HAZARDOUS:
-        contamination_flag = True
-        reason = "hazardous_item"
+    agent_disagreement = decision.agent_disagreement
+    reason = decision.reason
 
-    if agent_b_label and agent_b_label != label:
+    # incorporate agent_b_label as synthetic conflict if provided
+    if agent_b_label and agent_b_label.lower() != label.lower():
         agent_disagreement = True
-        contamination_flag = True
-        reason = "agent_disagreement"
-
-    if confidence < 0.75:
-        contamination_flag = True
-        reason = reason or "low_confidence"
+        reason = "agent_b_conflict"
 
     return DecisionResult(
-        route=route,
-        contamination_flag=contamination_flag,
+        route=decision.final_route,
+        contamination_flag=decision.contamination_flag,
         agent_disagreement=agent_disagreement,
         reason=reason,
+        contamination_score=decision.contamination_score,
+        confidence_score=decision.confidence_score,
+        material_agent_decision=decision.material_agent_decision,
+        routing_agent_decision=decision.routing_agent_decision,
     )

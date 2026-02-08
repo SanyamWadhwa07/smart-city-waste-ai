@@ -6,8 +6,19 @@ import random
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 
-from .schemas import Metrics
+from .schemas import (
+    AlertResponse,
+    ContaminationMetricsResponse,
+    Event,
+    ImpactSummary,
+    Metrics,
+    ThresholdSnapshot,
+    WindowMetrics,
+)
 from .simulator import generate_event
+from .impact import ImpactTracker
+from .adaptive import AdaptiveThresholdManager
+from .contamination_monitor import ContaminationMonitor
 
 USE_REAL_INFERENCE = os.getenv("USE_REAL_INFERENCE", "0") == "1"
 
@@ -35,13 +46,38 @@ _state = {
     "recovery_value_usd": 0.0,
 }
 
+impact_tracker = ImpactTracker()
+adaptive_manager = AdaptiveThresholdManager()
+contamination_monitor = ContaminationMonitor()
 
-def update_metrics(event_contamination: bool) -> None:
+def update_metrics(event: Event) -> None:
     _state["items_processed"] += 1
-    if event_contamination:
+    if event.decision.contamination_flag:
         _state["contamination_alerts"] += 1
-    _state["co2_saved_kg"] = round(_state["items_processed"] * 0.0035, 2)
-    _state["recovery_value_usd"] = round(_state["items_processed"] * 0.18, 2)
+
+    # Environmental & economic impact
+    impact_tracker.record_event(
+        object_class=event.detection.label,
+        routing_decision=event.decision.route,
+        contaminated=event.decision.contamination_flag,
+        agent_disagreement=event.decision.agent_disagreement,
+    )
+    snap = impact_tracker.summary()
+    _state["co2_saved_kg"] = snap.total_co2_kg
+    _state["recovery_value_usd"] = snap.revenue_usd
+
+    # Adaptive learning tracking
+    adaptive_manager.record_event(
+        material_type=event.detection.label,
+        contamination_flag=event.decision.contamination_flag,
+        agent_disagreement=event.decision.agent_disagreement,
+        confidence=event.detection.confidence,
+    )
+
+    # Contamination monitor for rolling analytics + alerts
+    contamination_monitor.record(event)
+
+    # Core operational metrics remain stochastic for demo purposes
     _state["system_accuracy"] = round(0.92 + random.random() * 0.06, 2)
     _state["efficiency_score"] = round(0.75 + random.random() * 0.2, 2)
 
@@ -56,6 +92,43 @@ async def metrics():
     return Metrics(**_state)
 
 
+@app.get("/impact/summary", response_model=ImpactSummary)
+async def impact_summary():
+    snap = impact_tracker.summary()
+    history = [
+        {"ts": ts, "co2_saved": co2, "revenue": rev} for ts, co2, rev in snap.history
+    ]
+    return ImpactSummary(
+        total_co2_kg=snap.total_co2_kg,
+        revenue_usd=snap.revenue_usd,
+        contamination_prevented=snap.contamination_prevented,
+        by_material_co2=snap.by_material_co2,
+        history=history,
+        last_updated=snap.last_updated.isoformat(),
+    )
+
+
+@app.get("/learning/thresholds", response_model=ThresholdSnapshot)
+async def learning_snapshot():
+    return adaptive_manager.snapshot()
+
+
+@app.get("/contamination/metrics", response_model=ContaminationMetricsResponse)
+async def contamination_metrics():
+    payload = contamination_monitor.metrics_payload()
+    return ContaminationMetricsResponse(
+        short_term=WindowMetrics(**payload["short_term"]),
+        medium_term=WindowMetrics(**payload["medium_term"]),
+        long_term=WindowMetrics(**payload["long_term"]),
+    )
+
+
+@app.get("/contamination/alerts", response_model=list[AlertResponse])
+async def contamination_alerts():
+    alerts = contamination_monitor.generate_alerts()
+    return [AlertResponse(**a) for a in alerts]
+
+
 @app.websocket("/ws/detections")
 async def detections(ws: WebSocket):
     await ws.accept()
@@ -68,7 +141,7 @@ async def detections(ws: WebSocket):
                     if event is None:
                         await asyncio.sleep(0.05)
                         continue
-                    update_metrics(event.decision.contamination_flag)
+                    update_metrics(event)
                     await ws.send_json(event.model_dump())
                     await asyncio.sleep(0.02)
             finally:
@@ -76,7 +149,7 @@ async def detections(ws: WebSocket):
         else:
             while True:
                 event = generate_event()
-                update_metrics(event.decision.contamination_flag)
+                update_metrics(event)
                 await ws.send_json(event.model_dump())
                 await asyncio.sleep(random.uniform(0.8, 1.6))
     except WebSocketDisconnect:

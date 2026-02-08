@@ -83,6 +83,10 @@ class YoloInference:
                 contamination_flag=decision_result.contamination_flag,
                 agent_disagreement=decision_result.agent_disagreement,
                 reason=decision_result.reason,
+                contamination_score=decision_result.contamination_score,
+                confidence_score=decision_result.confidence_score,
+                material_agent_decision=decision_result.material_agent_decision,
+                routing_agent_decision=decision_result.routing_agent_decision,
             ),
         )
 
