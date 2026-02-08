@@ -12,6 +12,8 @@ import {
   Sun,
   Moon,
   Recycle,
+  Leaf,
+  SlidersHorizontal,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "@/hooks/useSimulation";
@@ -21,6 +23,8 @@ const navItems = [
   { to: "/", label: "Home", icon: Home },
   { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { to: "/analytics", label: "Analytics", icon: BarChart3 },
+  { to: "/impact", label: "Impact", icon: Leaf },
+  { to: "/learning", label: "Adaptive", icon: SlidersHorizontal },
   { to: "/alerts", label: "Alerts", icon: Bell },
   { to: "/about", label: "About", icon: Info },
 ];

@@ -30,3 +30,24 @@ class Metrics(BaseModel):
     efficiency_score: float
     co2_saved_kg: float
     recovery_value_usd: float
+
+
+class ImpactHistoryPoint(BaseModel):
+    ts: str
+    co2_saved: float
+    revenue: float
+
+
+class ImpactSummary(BaseModel):
+    total_co2_kg: float
+    revenue_usd: float
+    contamination_prevented: int
+    by_material_co2: dict[str, float]
+    history: list[ImpactHistoryPoint]
+    last_updated: str
+
+
+class ThresholdSnapshot(BaseModel):
+    thresholds: dict[str, float]
+    performance: dict
+    adjustments: list[dict]

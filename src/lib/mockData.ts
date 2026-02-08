@@ -256,3 +256,77 @@ export const architectureNodes = [
   { id: "decision", label: "Decision Engine", icon: "Cpu" },
   { id: "output", label: "Output", icon: "Target" },
 ];
+
+// Impact & adaptive learning helpers
+export const generateImpactHistory = (points = 18) => {
+  const now = Date.now();
+  return Array.from({ length: points }, (_, idx) => {
+    const ts = new Date(now - (points - idx) * 60 * 60 * 1000).toISOString();
+    const co2_saved = Math.round((28 + Math.random() * 12) * 10) / 10;
+    const revenue = Math.round((4 + Math.random() * 3) * 100) / 100;
+    return { ts, co2_saved, revenue };
+  });
+};
+
+export const generateImpactSummaryMock = () => {
+  const history = generateImpactHistory();
+  const total_co2_kg = Math.round(history.reduce((s, h) => s + h.co2_saved, 0) * 10) / 10;
+  const revenue_usd = Math.round(history.reduce((s, h) => s + h.revenue, 0) * 100) / 100;
+  return {
+    total_co2_kg,
+    revenue_usd,
+    contamination_prevented: 3 + Math.floor(Math.random() * 4),
+    by_material_co2: {
+      PLASTIC: 0.34 * total_co2_kg,
+      PAPER: 0.18 * total_co2_kg,
+      METAL_ALUMINUM: 0.22 * total_co2_kg,
+      GLASS: 0.12 * total_co2_kg,
+      ORGANIC: 0.14 * total_co2_kg,
+    },
+    history,
+    last_updated: new Date().toISOString(),
+  };
+};
+
+export const generateThresholdSnapshotMock = () => {
+  const thresholds = {
+    PLASTIC: 0.78,
+    METAL: 0.76,
+    PAPER: 0.74,
+    GLASS: 0.75,
+    ORGANIC: 0.72,
+  };
+  const performance = Object.keys(thresholds).reduce<Record<
+    string,
+    { contamination_rate: number; conflict_rate: number; avg_confidence: number; sample_size: number }
+  >>((acc, key) => {
+    acc[key] = {
+      contamination_rate: Math.round((6 + Math.random() * 8) * 10) / 10,
+      conflict_rate: Math.round((3 + Math.random() * 6) * 10) / 10,
+      avg_confidence: Math.round((82 + Math.random() * 8) * 10) / 10,
+      sample_size: 350 + Math.floor(Math.random() * 220),
+    };
+    return acc;
+  }, {});
+
+  return {
+    thresholds,
+    performance,
+    adjustments: [
+      {
+        timestamp: new Date(Date.now() - 60 * 60 * 1000).toISOString(),
+        material_type: "PLASTIC",
+        old_threshold: 0.75,
+        new_threshold: 0.78,
+        reason: "High contamination rate: 22.4%",
+      },
+      {
+        timestamp: new Date(Date.now() - 3 * 60 * 60 * 1000).toISOString(),
+        material_type: "ORGANIC",
+        old_threshold: 0.70,
+        new_threshold: 0.72,
+        reason: "High agent conflict rate: 27.1%",
+      },
+    ],
+  };
+};

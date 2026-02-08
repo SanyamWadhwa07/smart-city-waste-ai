@@ -8,6 +8,8 @@ import DashboardPage from "./pages/DashboardPage";
 import AnalyticsPage from "./pages/AnalyticsPage";
 import AlertsPage from "./pages/AlertsPage";
 import AboutPage from "./pages/AboutPage";
+import ImpactPage from "./pages/ImpactPage";
+import LearningPage from "./pages/LearningPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -22,6 +24,8 @@ const App = () => (
           <Route path="/" element={<LandingPage />} />
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/analytics" element={<AnalyticsPage />} />
+          <Route path="/impact" element={<ImpactPage />} />
+          <Route path="/learning" element={<LearningPage />} />
           <Route path="/alerts" element={<AlertsPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="*" element={<NotFound />} />
