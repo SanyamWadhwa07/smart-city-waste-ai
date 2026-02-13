@@ -1,0 +1,31 @@
+# Garbage Classification Dataset (Fine-grained Material Verification)
+# Secondary agent for dual-verification system
+# 10 material classes for detailed waste categorization
+
+path: ../garbage classification/standardized_256
+train: battery
+val: battery  # Note: This dataset has no explicit train/val split, needs preprocessing
+
+nc: 10
+names:
+  - battery
+  - biological
+  - cardboard
+  - clothes
+  - glass
+  - metal
+  - paper
+  - plastic
+  - shoes
+  - trash
+
+# Dataset info
+description: Fine-grained material classification for secondary agent verification
+source: Garbage Classification Dataset
+resolution: 256x256
+format: image_classification  # Not YOLO format, needs conversion for training
+
+# Usage notes:
+# - This dataset is organized by class folders, not YOLO format
+# - Use for training a secondary classifier (ResNet, EfficientNet, etc.)
+# - Cross-validate with primary YOLO detector for contamination detection
