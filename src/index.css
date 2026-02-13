@@ -1,0 +1,431 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* 🌙 DARK MODE - Default (AI Dashboard Feel) */
+  :root {
+    /* Core - Deep Space Theme */
+    --background: 197 47% 7%;      /* #0B1419 Deep Space */
+    --foreground: 190 25% 93%;     /* #E6F4F7 Frost */
+    --card: 200 35% 12%;           /* #121E26 Carbon */
+    --card-foreground: 190 25% 93%;
+    --popover: 200 35% 12%;
+    --popover-foreground: 190 25% 93%;
+    
+    /* Primary - Neon Teal */
+    --primary: 172 100% 38%;       /* #00C2A8 Neon Teal */
+    --primary-foreground: 190 25% 93%;
+    
+    /* Secondary - Emerald Glow */
+    --secondary: 151 61% 53%;      /* #39D98A Emerald Glow */
+    --secondary-foreground: 197 47% 7%;
+    
+    /* Accent - Electric Cyan */
+    --accent: 199 92% 60%;         /* #38BDF8 Electric Cyan */
+    --accent-foreground: 197 47% 7%;
+    
+    /* Muted & Border */
+    --muted: 200 30% 15%;          /* #162A33 Graphite Blue */
+    --muted-foreground: 195 21% 66%; /* #9BB4BE Mist */
+    --border: 200 31% 19%;         /* #223843 Soft Steel */
+    --input: 200 31% 19%;
+    --ring: 172 100% 38%;
+    
+    /* Destructive - Contamination */
+    --destructive: 0 70% 71%;      /* #F87171 */
+    --destructive-foreground: 190 25% 93%;
+    
+    /* Semantic Colors */
+    --success: 142 71% 45%;        /* #22C55E */
+    --warning: 38 92% 50%;         /* #F59E0B */
+    --info: 221 83% 68%;           /* #60A5FA */
+    --contamination: 0 70% 71%;    /* #F87171 */
+    
+    /* Waste Stream Colors (Global) */
+    --waste-plastic: 199 92% 60%;  /* #38BDF8 Cyan */
+    --waste-paper: 221 83% 68%;    /* #60A5FA Blue */
+    --waste-metal: 210 14% 59%;    /* #94A3B8 Steel */
+    --waste-organic: 142 71% 45%;  /* #22C55E Green */
+    --waste-glass: 173 97% 57%;    /* #14B8A6 Teal */
+    --waste-cardboard: 30 80% 56%; /* #F59E0B Amber */
+    
+    /* Charts */
+    --chart-1: 172 100% 38%;
+    --chart-2: 151 61% 53%;
+    --chart-3: 199 92% 60%;
+    --chart-4: 142 71% 45%;
+    --chart-5: 38 92% 50%;
+    
+    /* Sidebar */
+    --sidebar-background: 197 47% 7%;
+    --sidebar-foreground: 190 25% 93%;
+    --sidebar-primary: 172 100% 38%;
+    --sidebar-primary-foreground: 190 25% 93%;
+    --sidebar-accent: 200 30% 15%;
+    --sidebar-accent-foreground: 190 25% 93%;
+    --sidebar-border: 200 31% 19%;
+    --sidebar-ring: 172 100% 38%;
+    
+    --radius: 0.5rem;
+  }
+
+  /* 🌞 LIGHT MODE - Eco-Tech Clean */
+  .light {
+    /* Core - Ice White Theme */
+    --background: 195 54% 97%;     /* #F6FAFB Ice White */
+    --foreground: 0 0% 11%;        /* #1C1C1C Graphite */
+    --card: 0 0% 100%;             /* #FFFFFF Pure White */
+    --card-foreground: 0 0% 11%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 11%;
+    
+    /* Primary - Deep Teal */
+    --primary: 194 72% 20%;        /* #0E4C59 Deep Teal */
+    --primary-foreground: 0 0% 100%;
+    
+    /* Secondary - Emerald */
+    --secondary: 150 62% 43%;      /* #2BB673 Emerald */
+    --secondary-foreground: 0 0% 100%;
+    
+    /* Accent - AI Cyan */
+    --accent: 197 100% 47%;        /* #00AEEF AI Cyan */
+    --accent-foreground: 0 0% 100%;
+    
+    /* Muted & Border */
+    --muted: 200 20% 95%;          /* #EEF4F6 */
+    --muted-foreground: 199 9% 42%; /* #5F6B73 Slate */
+    --border: 195 26% 91%;         /* #E3EEF2 Cool Gray */
+    --input: 195 26% 91%;
+    --ring: 194 72% 20%;
+    
+    /* Destructive */
+    --destructive: 5 67% 57%;      /* #E5533D */
+    --destructive-foreground: 0 0% 100%;
+    
+    /* Semantic Colors */
+    --success: 145 63% 42%;        /* #27AE60 */
+    --warning: 36 86% 58%;         /* #F2A735 */
+    --info: 204 70% 53%;           /* #2D9CDB */
+    --contamination: 5 67% 57%;    /* #E5533D */
+    
+    /* Waste Stream Colors */
+    --waste-plastic: 197 100% 47%;
+    --waste-paper: 204 70% 53%;
+    --waste-metal: 210 14% 53%;
+    --waste-organic: 145 63% 42%;
+    --waste-glass: 173 80% 40%;
+    --waste-cardboard: 36 86% 58%;
+    
+    /* Charts */
+    --chart-1: 194 72% 20%;
+    --chart-2: 150 62% 43%;
+    --chart-3: 197 100% 47%;
+    --chart-4: 145 63% 42%;
+    --chart-5: 36 86% 58%;
+    
+    /* Sidebar */
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 0 0% 11%;
+    --sidebar-primary: 194 72% 20%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 200 20% 95%;
+    --sidebar-accent-foreground: 0 0% 11%;
+    --sidebar-border: 195 26% 91%;
+    --sidebar-ring: 194 72% 20%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1, "ss01" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  
+  /* Professional Typography Scale */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold tracking-tight;
+  }
+  
+  h1 {
+    @apply text-4xl md:text-5xl;
+    letter-spacing: -0.02em;
+  }
+  
+  h2 {
+    @apply text-3xl md:text-4xl;
+    letter-spacing: -0.015em;
+  }
+  
+  h3 {
+    @apply text-2xl md:text-3xl;
+  }
+  
+  h4 {
+    @apply text-xl md:text-2xl;
+  }
+  
+  /* Improved readability for paragraphs */
+  p {
+    @apply text-muted-foreground leading-relaxed;
+  }
+  
+  /* Code blocks */
+  code {
+    @apply font-mono text-sm px-1.5 py-0.5 rounded bg-muted/50 border border-border/50;
+  }
+  
+  pre code {
+    @apply px-0 py-0 bg-transparent border-0;
+  }
+  
+  /* Selection color */
+  ::selection {
+    @apply bg-primary/20 text-foreground;
+  }
+  
+  /* Focus rings */
+  :focus-visible {
+    @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
+  }
+}
+
+@layer components {
+  /* Professional Glass-morphism Card */
+  .glass-card {
+    @apply bg-card/90 backdrop-blur-2xl border border-border/60 shadow-2xl shadow-black/10;
+  }
+
+  /* AI Dashboard Gradient Text (NVIDIA-style) */
+  .gradient-text {
+    @apply bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent;
+    background-size: 200% auto;
+    animation: gradient-shift 4s ease-in-out infinite;
+  }
+
+  /* Premium Hero Gradient (Subtle - ONE Only) */
+  .hero-gradient {
+    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--accent)) 100%);
+    opacity: 0.06;
+  }
+
+  /* Animated Background (Dark Mode) */
+  .gradient-bg {
+    @apply bg-gradient-to-br from-background via-card/20 to-background;
+    background-size: 400% 400%;
+    animation: gradient-move 30s ease infinite;
+  }
+
+  /* Detection Overlay Glow (AI Vision Style) */
+  .detection-glow {
+    box-shadow: 0 0 20px currentColor, 0 0 40px currentColor, inset 0 0 10px currentColor;
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+
+  /* Contamination Alert Pulse */
+  .pulse-alert {
+    @apply animate-pulse;
+    animation: pulse-glow 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  /* Counter Animation */
+  .counter-animate {
+    animation: counter-pop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  /* Fade In Up */
+  .animate-fade-in-up {
+    animation: fade-in-up 0.5s ease-out forwards;
+  }
+
+  /* Stagger Children (Dashboard Cards) */
+  .stagger-children > * {
+    opacity: 0;
+    animation: fade-in-up 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+  .stagger-children > *:nth-child(1) { animation-delay: 0.05s; }
+  .stagger-children > *:nth-child(2) { animation-delay: 0.1s; }
+  .stagger-children > *:nth-child(3) { animation-delay: 0.15s; }
+  .stagger-children > *:nth-child(4) { animation-delay: 0.2s; }
+  .stagger-children > *:nth-child(5) { animation-delay: 0.25s; }
+  .stagger-children > *:nth-child(6) { animation-delay: 0.3s; }
+
+  /* Bounding Box Appear */
+  .bounding-box {
+    animation: box-appear 0.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+
+  /* Floating Animation */
+  .floating-particle {
+    animation: float 8s ease-in-out infinite;
+  }
+
+  /* Stream Item Slide */
+  .stream-item {
+    animation: slide-in-left 0.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  /* Premium Hover Lift */
+  .hover-lift {
+    @apply transition-all duration-300 ease-out;
+  }
+  .hover-lift:hover {
+    @apply -translate-y-1 shadow-2xl shadow-primary/5;
+  }
+
+  /* Shimmer Effect (Loading State) */
+  .shine {
+    position: relative;
+    overflow: hidden;
+  }
+  .shine::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, hsla(var(--foreground), 0.05), transparent);
+    animation: shine 2.5s infinite;
+  }
+
+  /* Professional Card with Hover */
+  .pro-card {
+    @apply glass-card hover-lift transition-all duration-300 border border-border/40;
+  }
+  .pro-card:hover {
+    @apply border-primary/40 shadow-lg shadow-primary/5;
+  }
+
+  /* Monospace for Logs & Code */
+  .font-mono-logs {
+    font-family: 'JetBrains Mono', 'Fira Code', 'SF Mono', Consolas, monospace;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    line-height: 1.6;
+  }
+
+  /* Waste Stream Color Coding (Global System) */
+  .waste-plastic { @apply text-waste-plastic; }
+  .waste-paper { @apply text-waste-paper; }
+  .waste-metal { @apply text-waste-metal; }
+  .waste-organic { @apply text-waste-organic; }
+  .waste-glass { @apply text-waste-glass; }
+  .waste-cardboard { @apply text-waste-cardboard; }
+
+  /* Waste BG Colors for badges/boxes */
+  .bg-waste-plastic { @apply bg-waste-plastic/10 border-waste-plastic/20; }
+  .bg-waste-paper { @apply bg-waste-paper/10 border-waste-paper/20; }
+  .bg-waste-metal { @apply bg-waste-metal/10 border-waste-metal/20; }
+  .bg-waste-organic { @apply bg-waste-organic/10 border-waste-organic/20; }
+  .bg-waste-glass { @apply bg-waste-glass/10 border-waste-glass/20; }
+  .bg-waste-cardboard { @apply bg-waste-cardboard/10 border-waste-cardboard/20; }
+
+  /* Contamination State */
+  .contaminated {
+    @apply text-contamination bg-contamination/10 border-contamination/30;
+  }
+
+  /* Agreement State */
+  .agreement {
+    @apply text-success bg-success/10 border-success/30;
+  }
+
+  /* Bin type colors (legacy compatibility) */
+  .bin-recyclable { @apply text-secondary; }
+  .bin-organic { @apply text-waste-organic; }
+  .bin-landfill { @apply text-muted-foreground; }
+  .bin-manual { @apply text-destructive; }
+  .bin-hazardous { @apply text-accent; }
+}
+
+@layer utilities {
+  /* Custom scrollbar */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    @apply bg-muted/30 rounded-full;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-muted rounded-full hover:bg-muted-foreground/50;
+  }
+}
+
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@keyframes gradient-move {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { 
+    box-shadow: 0 0 0 0 hsl(var(--accent) / 0.4);
+  }
+  50% { 
+    box-shadow: 0 0 20px 10px hsl(var(--accent) / 0.2);
+  }
+}
+
+@keyframes counter-pop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes box-appear {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  33% { transform: translateY(-10px) rotate(5deg); }
+  66% { transform: translateY(5px) rotate(-3deg); }
+}
+
+@keyframes slide-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes shine {
+  0% { left: -100%; }
+  100% { left: 200%; }
+}

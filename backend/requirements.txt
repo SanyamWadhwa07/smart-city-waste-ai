@@ -1,0 +1,13 @@
+fastapi>=0.111
+uvicorn[standard]>=0.30
+pydantic>=2.7
+python-dotenv>=1.0.0
+
+# Dataset preparation
+kaggle>=1.5.16
+Pillow>=10.0.0
+
+# Transformers for SigLIP Tier 2 model
+transformers>=4.36.0
+torch>=2.0.0
+torchvision>=0.15.0

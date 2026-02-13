@@ -1,0 +1,24 @@
+version: "3.9"
+
+services:
+  backend:
+    build:
+      context: ./backend
+      args:
+        INSTALL_YOLO: "0"
+    environment:
+      USE_REAL_INFERENCE: "0"
+      MODEL_PATH: /app/models/yolov8n.pt
+      CAMERA_SOURCE: "0"
+    volumes:
+      - ./backend/models:/app/models
+    ports:
+      - "8000:8000"
+
+  frontend:
+    build:
+      context: .
+    depends_on:
+      - backend
+    ports:
+      - "5173:80"
