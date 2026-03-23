@@ -1,73 +1,104 @@
-# Welcome to your Lovable project
+# ♻️ Smart City Waste AI
 
-## Project info
+AI-powered waste classification system using **YOLO-based object detection**, extended with **dual-model inference for contamination detection**.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+---
 
-## How can I edit this code?
+## 🧠 Overview
 
-There are several ways of editing your application.
+This project addresses inefficient waste segregation by using real-time computer vision to:
 
-**Use Lovable**
+- Detect waste objects
+- Classify material type (plastic, paper, metal, etc.)
+- Identify contamination (mixed or incorrect disposal)
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+Built for **smart city pipelines and intelligent waste management systems**.
 
-Changes made via Lovable will be committed automatically to this repo.
+---
 
-**Use your preferred IDE**
+## ⚙️ Key Features
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+- Real-time waste detection using YOLO
+- Multi-class classification on Garbage Classification Dataset 2
+- Dual-model pipeline for contamination detection
+- Designed for camera / smart-bin integration
+- Low-latency inference pipeline
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+---
 
-Follow these steps:
+## 🏗️ System Architecture
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+Input (Image / Video)  
+→ YOLO Model (Object Detection + Classification)  
+→ Secondary Model (Contamination Detection)  
+→ Post-processing  
+→ Output (Class + Contamination Status)
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+---
 
-# Step 3: Install the necessary dependencies.
-npm i
+## 🧪 Tech Stack
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+- Python  
+- YOLO (Ultralytics)  
+- OpenCV  
+- NumPy  
 
-**Edit a file directly in GitHub**
+---
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## 📊 Model Details
 
-**Use GitHub Codespaces**
+- **Primary Model:** YOLO trained on Garbage Classification Dataset 2  
+- **Task:** Object detection + waste classification  
+- **Secondary Model:** Contamination detection (identifies mixed/incorrect waste)  
+- **Pipeline:** Dual inference → combined decision output  
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+---
 
-## What technologies are used for this project?
+## 📂 Project Structure
 
-This project is built with:
+smart-city-waste-ai/  
+│  
+├── data/  
+├── models/  
+├── src/  
+├── app.py  
+├── requirements.txt  
+└── README.md  
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+---
 
-## How can I deploy this project?
+## 🚀 Getting Started
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+Clone the repository:
 
-## Can I connect a custom domain to my Lovable project?
+    git clone https://github.com/SanyamWadhwa07/smart-city-waste-ai.git
+    cd smart-city-waste-ai
 
-Yes, you can!
+Install dependencies:
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+    pip install -r requirements.txt
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+Run the app:
+
+    python app.py
+
+---
+
+## 🎯 Use Cases
+
+- Smart waste bins  
+- Automated sorting systems  
+- Recycling plants  
+- Campus / city waste monitoring  
+
+---
+
+## 📈 Future Improvements
+
+- Edge deployment (Jetson / mobile)  
+- Real-time video stream optimization  
+- Route optimization for waste collection  
+- Dashboard for analytics  
+
+---
+
